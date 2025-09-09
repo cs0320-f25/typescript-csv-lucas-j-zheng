@@ -2,6 +2,10 @@ import { parseCSV } from "../src/basic-parser";
 import * as path from "path";
 
 const PEOPLE_CSV_PATH = path.join(__dirname, "../data/people.csv");
+const SENTENCES_CSV_PATH = path.join(__dirname, "../data/sentences.csv");
+const EMPTY_CSV_PATH = path.join(__dirname, "../data/empties.csv");
+const EMPTY_FILE_CSV_PATH = path.join(__dirname, "../data/empty_file.csv");
+const SPACE_TRIMMING_CSV_PATH = path.join(__dirname, "../data/spaces.csv");
 
 test("parseCSV yields arrays", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH)
@@ -19,4 +23,56 @@ test("parseCSV yields only arrays", async () => {
   for(const row of results) {
     expect(Array.isArray(row)).toBe(true);
   }
+});
+
+test("parseCSV handles commas in quotes", async () => {
+  /**  Sentences csv:
+   * writer,sentence,reader
+    John,"I am hungry, and I am tired",Jerry
+    Priscilla,"Hmm, what is the time?",Sam
+  */
+  const results = await parseCSV(SENTENCES_CSV_PATH)
+
+  expect (results).toHaveLength(3);
+  expect(results[0]).toEqual(["writer","sentence","reader"]);
+  expect(results[1]).toEqual(["John","I am hungry, and I am tired","Jerry"]);
+  expect(results[2]).toEqual(["Priscilla","Hmm, what is the time?","Sam"]);
+});
+
+test("parseCSV handles empty lines and empty columns", async () => {
+  /**  Empties csv:
+   * name,age
+    Alice,23
+
+    Bob,thirty
+    Charlie,
+    ,22
+  */
+  const results = await parseCSV(EMPTY_CSV_PATH)
+  expect (results).toHaveLength(5);
+  expect(results[0]).toEqual(["name","age"]);
+  expect(results[1]).toEqual(["Alice","23"]);
+  expect(results[2]).toEqual(["Bob","thirty"]);
+  expect(results[3]).toEqual(["Charlie",null]);
+  expect(results[4]).toEqual([null,"22"]);
+});
+
+test("parseCSV handles space trimming", async () => {
+  /**
+   * name, age
+  Alice , 23
+  Bob, 30 
+  Charlie ,  40
+   */
+  const results = await parseCSV(SPACE_TRIMMING_CSV_PATH)
+  expect (results).toHaveLength(4);
+  expect(results[0]).toEqual(["name","age"]);
+  expect(results[1]).toEqual(["Alice","23"]);
+  expect(results[2]).toEqual(["Bob","30"]);
+  expect(results[3]).toEqual(["Charlie","40"]);
+});
+test("parseCSV handles empty file", async () => {
+  const results = await parseCSV(EMPTY_FILE_CSV_PATH)
+  expect (results).toHaveLength(0);
+  expect(results).toEqual([]);
 });
