@@ -1,0 +1,12 @@
+1. What makes a CSV parser “correct”? We're not asking for additional input-output pairs here, but fairly precise, natural-language descriptions. Put another way, what kinds of general properties should your tests be checking about your CSV parser?
+
+A correct csv parser 
+1. splits csvs by commas (delimiter) when it is not contained by quotes
+2. preserves rows when multiple rows aren't in quotes (part of the data)
+3. preserves columns where each column of each row has a relationship with the others based on that column's properties
+4. ignores whitespace at beginnign & end of csv cells
+5. headers are taken as a reference for parsing data, separate row instead of being part of data itself
+
+2. The random data can help you test edge cases that you wouldn't be able to write all test cases for. Also create a deparser which turns parsed data into csv and test if it's the same result. Test failure handling, random probably makes a lot of data that shouldn't work, having good error handling. 
+
+3. This was really different because I wasn't looking for a full implementation and was just going to lay out the tests and specifications for a future implementation. I was also working with a lot of new things that I haven't used before. I had bugs with not knowing how to use the Zod schema inside the parser but I figured that out by reading the linked type page that had some more information on how Zod worked. I think I avoided other bugs by just following along with the spring instructions and referring to notes from class before implementing anything.
