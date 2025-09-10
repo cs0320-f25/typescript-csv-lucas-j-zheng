@@ -45,8 +45,8 @@ Export functionality (convert) into tensors or NumPY arrays
     My initial ideas are above in step 1. The LLM suggested the ones in step 2. The results differed when I prompted specifically for different use cases. I prompted to ask for a parser that works well for parsing ML training data & it mentioned specific tensor/numpy functionality and type casting needs. But generally, it gave more broad answers that weren't as helpful. I really liked the 2 I put in my step 3 (1,4). Different delimiters is a great idea to make it a more all-encompassing parser and also the reverse support is a great idea. It mentioned something about different types of newlines for operating systems/computers -- i didn't really understand that.
 
     As a user of the application I am able to use delimiters other than commas in case I am given data in that way, I am able to get the same information from csv or other types of delimiters.
-    As a user of the applicatoin, I can put entire sentences with commas inside of quotes without it adversely affecting parsing.
-    As a user of the applicatoin, I can give incomplete data and the parser labels the incomplete cells as null.
+    As a user of the application, I can put entire sentences with commas inside of quotes without it adversely affecting parsing.
+    As a user of the application, I can give incomplete data and the parser labels the incomplete cells as null.
     As a user of the application, I can reverse parse, turn an object or array into a csv for storage.
 
 ### Design Choices
@@ -58,12 +58,12 @@ Export functionality (convert) into tensors or NumPY arrays
 - #### 2. Random, On-Demand Generation
 
 - #### 3. Overall experience, Bugs encountered and resolved
-#### Errors/Bugs:
-#### Tests:
+#### Errors/Bugs: Issues with running parser. No npm run build like in gear up. Couldn't figure out how to run, checked package.json
+#### Tests: Handling empty csv, extra whitespace, extra 
 #### How To…
 
 #### Team members and contributions (include cs logins):
 
-#### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-#### Total estimated time it took to complete project:
-#### Link to GitHub Repo:  
+#### Collaborators (cslogins of anyone you worked with on this project and/or generative AI): Used to help generate part of event.csv for testing.
+#### Total estimated time it took to complete project: 4 hours
+#### Link to GitHub Repo: https://github.com/cs0320-f25/typescript-csv-lucas-j-zheng

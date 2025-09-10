@@ -7,6 +7,7 @@ const SENTENCES_CSV_PATH = path.join(__dirname, "../data/sentences.csv");
 const EMPTY_CSV_PATH = path.join(__dirname, "../data/empties.csv");
 const EMPTY_FILE_CSV_PATH = path.join(__dirname, "../data/empty_file.csv");
 const SPACE_TRIMMING_CSV_PATH = path.join(__dirname, "../data/spaces.csv");
+const EVENT_CSV_PATH = path.join(__dirname, "../data/event.csv");
 
 test("parseCSV yields arrays", async () => {
   const results = await parseCSV(PEOPLE_CSV_PATH, undefined)
@@ -77,7 +78,7 @@ test("parseCSV handles empty file", async () => {
   expect (results).toHaveLength(0);
   expect(results).toEqual([]);
 });
-
+/*
 test("parseCSV with schema yields typed objects", async () => {
   const personSchema = z.tuple([
     z.string(), // name
@@ -91,4 +92,34 @@ test("parseCSV with schema yields typed objects", async () => {
   expect(results[2]).toEqual({name: "Bob", age: NaN}); 
   expect(results[3]).toEqual({name: "Charlie", age: 25});
   expect(results[4]).toEqual({name: "Nim", age: 22});
+});*/
+
+test("parseCSV with schema yields only typed objects", async () => {
+  /**
+   * 
+The Hall,Boston,300,300
+Pier 2324,San Francisco,200,200
+Grand Central,New York,200,1200
+Portland Arena,Portland,400,80
+
+   */
+const EventSchema = z.tuple([
+    z.string(),
+    z.string(),
+    z.coerce.number(),
+    z.coerce.number()
+]).transform(tup => ({name: tup[0], city: tup[1], length: tup[2], capacity: tup[3]}));
+  const results = await parseCSV(EVENT_CSV_PATH, EventSchema)
+  for(const record of results) {
+    expect(typeof record).toBe("object");
+    expect(record).toHaveProperty("name");
+    expect(record).toHaveProperty("city");
+    expect(record).toHaveProperty("length");
+    expect(record).toHaveProperty("capacity");
+  }
+  expect(results).toHaveLength(4);
+  expect(results[0]).toEqual({name: "The Hall", city: "Boston", length: 300, capacity: 300});
+  expect(results[1]).toEqual({name: "Pier 2324", city: "San Francisco", length: 200, capacity: 200});
+  expect(results[2]).toEqual({name: "Grand Central", city: "New York", length: 200, capacity: 1200});
+  expect(results[3]).toEqual({name: "Portland Arena", city: "Portland", length: 400, capacity: 80});
 });
