@@ -6,12 +6,11 @@ import {z} from "zod";
 
 const DATA_FILE = "./data/event.csv"; // update with your actual file name
 /**
- * name,city,length,capacity
-Riverwalk,Boston,1200,300
-Sunset Pier,San Francisco,850,200
-Grand Hall,New York,500,1200
-Cedar Bridge,Portland,230,80
-Maple Arena,Chicago,650,900
+ * 
+ * The Hall,Boston,300,300
+Pier 2324,San Francisco,200,200
+Grand Central,New York,200,1200
+Portland Arena,Portland,400,80
  */
 
 async function main() {
