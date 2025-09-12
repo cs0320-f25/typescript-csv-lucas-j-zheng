@@ -78,8 +78,8 @@ test("parseCSV handles empty file", async () => {
   expect (results).toHaveLength(0);
   expect(results).toEqual([]);
 });
-/*
-test("parseCSV with schema yields typed objects", async () => {
+
+test("parseCSV with schema yields typed objects 1", async () => {
   const personSchema = z.tuple([
     z.string(), // name
     z.coerce.number(),]).transform( tup => ({name:tup[0], age:tup[1]}));
@@ -92,9 +92,9 @@ test("parseCSV with schema yields typed objects", async () => {
   expect(results[2]).toEqual({name: "Bob", age: NaN}); 
   expect(results[3]).toEqual({name: "Charlie", age: 25});
   expect(results[4]).toEqual({name: "Nim", age: 22});
-});*/
+});
 
-test("parseCSV with schema yields only typed objects", async () => {
+test("parseCSV with schema yields only typed objects 2", async () => {
   /**
    * 
 The Hall,Boston,300,300
